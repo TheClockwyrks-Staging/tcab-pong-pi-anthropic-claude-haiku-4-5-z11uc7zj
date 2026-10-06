@@ -1,0 +1,15 @@
+[[media]]
+file = "gameplay.png"
+name = "Live gameplay with spin-curved ball and bank shot off obstacles"
+
+[[media]]
+file = "title.png"
+name = "The title screen menu"
+
+[[media]]
+file = "versus.png"
+name = "Two-player versus mode in action"
+
+[[media]]
+file = "matchpoint.png"
+name = "High-scoring match with both players at 10 points"

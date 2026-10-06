@@ -18,9 +18,8 @@ export class AudioManager {
 
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const AudioContext =
-        window.AudioContext || (window as any).webkitAudioContext;
-      this.audioContext = new AudioContext();
+      const AC = window.AudioContext || (window as any).webkitAudioContext;
+      this.audioContext = new AC();
     } catch {
       console.warn("Audio context not available");
     }

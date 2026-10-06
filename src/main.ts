@@ -44,30 +44,34 @@ function initializeGame(): void {
     reset: () => debugSurface.reset(),
     reconcile: () => debugSurface.reconcile(),
     // Screens
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setScreen: (screen: string) => debugSurface.setScreen(screen as any),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setMode: (mode: string) => debugSurface.setMode(mode as any),
+    setScreen: (screen: string) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      debugSurface.setScreen(screen as any),
+    setMode: (mode: string) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      debugSurface.setMode(mode as any),
     setMenuIndex: (index: number) => debugSurface.setMenuIndex(index),
     setTitleIndex: (index: number) => debugSurface.setTitleIndex(index),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setResumeScreen: (screen: string) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       debugSurface.setResumeScreen(screen as any),
     // Match state
     setScore: (p1: number, p2: number) => debugSurface.setScore(p1, p2),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setWinner: (side: string | null) => debugSurface.setWinner(side as any),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setReceiver: (side: string) => debugSurface.setReceiver(side as any),
+    setWinner: (side: string | null) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      debugSurface.setWinner(side as any),
+    setReceiver: (side: string) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      debugSurface.setReceiver(side as any),
     // Paddles
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setPaddleCy: (side: string, cy: number) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       debugSurface.setPaddleCy(side as any, cy),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setPaddleVy: (side: string, vy: number) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       debugSurface.setPaddleVy(side as any, vy),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setPaddleDriven: (side: string, driven: boolean) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       debugSurface.setPaddleDriven(side as any, driven),
     // Ball
     setBallPosition: (x: number, y: number) =>
