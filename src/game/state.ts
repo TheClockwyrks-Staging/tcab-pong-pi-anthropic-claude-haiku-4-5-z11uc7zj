@@ -71,13 +71,17 @@ export function createBall() {
 }
 
 export function resetState(state: GameState): void {
+  const currentTitleIndex = state.titleIndex;
+  const currentSimTime = state.simTime;
+  const currentMuted = state.muted;
+
   state.screen = "title";
   state.mode = "solo";
   state.menuIndex = 0;
   state.resumeScreen = "playing";
-  state.titleIndex = state.titleIndex; // kept
-  state.simTime = state.simTime; // kept
-  state.muted = state.muted; // kept
+  state.titleIndex = currentTitleIndex; // kept
+  state.simTime = currentSimTime; // kept
+  state.muted = currentMuted; // kept
 
   state.score = { p1: 0, p2: 0 };
   state.winner = null;

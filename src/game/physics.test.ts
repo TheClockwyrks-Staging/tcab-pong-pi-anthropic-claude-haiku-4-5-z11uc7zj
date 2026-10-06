@@ -1,7 +1,7 @@
 // Unit tests for ball physics
 
 import { describe, it, expect, beforeEach } from "vitest";
-import { FIELD_W, FIELD_H, BALL_R, P1_X1, P2_X0 } from "../constants";
+import { FIELD_H, BALL_R } from "../constants";
 import { createInitialState } from "./state";
 import { updateBall } from "./physics";
 

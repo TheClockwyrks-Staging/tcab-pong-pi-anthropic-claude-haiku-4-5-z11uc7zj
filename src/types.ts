@@ -1,6 +1,7 @@
 // Type definitions for the game
 
-export type Screen = "title" | "howto" | "countdown" | "playing" | "paused" | "matchover";
+export type Screen =
+  "title" | "howto" | "countdown" | "playing" | "paused" | "matchover";
 export type Mode = "solo" | "versus";
 export type Side = "left" | "right";
 
@@ -90,8 +91,6 @@ export interface Input {
   pause: boolean;
   mute: boolean;
 }
-
-
 
 export interface MenuItem {
   rect: { x: number; y: number; w: number; h: number } | null;

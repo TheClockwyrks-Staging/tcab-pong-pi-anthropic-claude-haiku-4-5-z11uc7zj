@@ -4,11 +4,18 @@ import { GameState } from "../types";
 import { Renderer } from "./renderer";
 import { InputManager } from "./input";
 import { AudioManager } from "./audio";
+import { PointerManager } from "./pointer";
 import { ScreenRenderer } from "../ui/screen";
 import { DebugSurface } from "../game/instrumentation";
-import { updateBall, resetAudioFlags, updatePaddleVy, updatePaddleVyDriven } from "../game/physics";
+import {
+  updateBall,
+  resetAudioFlags,
+  updatePaddleVy,
+  updatePaddleVyDriven,
+} from "../game/physics";
 import { updateAI } from "../game/ai";
-import { handleScreenInput } from "../ui/input";
+import { handleGameStateInput } from "../ui/input";
+import { handleMenuInput } from "../ui/menu";
 import { PADDLE_SPEED } from "../constants";
 
 export class GameLoop {
@@ -16,7 +23,9 @@ export class GameLoop {
   private renderer: Renderer;
   private inputManager: InputManager;
   private audioManager: AudioManager;
+  private pointerManager: PointerManager;
   private screenRenderer: ScreenRenderer;
+  private debugSurface: DebugSurface;
   private lastFrameTime = 0;
   private autoStep = true;
   private running = false;
@@ -30,7 +39,14 @@ export class GameLoop {
     this.renderer = new Renderer(canvas);
     this.inputManager = new InputManager();
     this.audioManager = new AudioManager();
+    this.pointerManager = new PointerManager();
     this.screenRenderer = new ScreenRenderer(debugSurface);
+    this.debugSurface = debugSurface;
+
+    // Set the pointer manager's scale function based on renderer
+    this.pointerManager.setScaleFunction((x, y) =>
+      this.renderer.canvasToLogical(x, y),
+    );
   }
 
   start(): void {
@@ -60,22 +76,28 @@ export class GameLoop {
 
   update(deltaTime: number): void {
     this.inputManager.update();
+    this.pointerManager.update();
     const edges = this.inputManager.getEdges();
+    const pointer = this.pointerManager.getPointer();
+    const touches = this.pointerManager.getTouches();
 
     // Update sim time
     this.state.simTime += deltaTime;
 
-    // Mirror mute bit
-    // Note: Mute toggle is handled in input
-
-    // Handle screen input
-    handleScreenInput(this.state, edges);
+    // Handle menu or game input
+    if (
+      this.state.screen === "title" ||
+      this.state.screen === "howto" ||
+      this.state.screen === "paused" ||
+      this.state.screen === "matchover"
+    ) {
+      handleMenuInput(this.state, edges, pointer, touches, this.debugSurface);
+    } else {
+      handleGameStateInput(this.state, edges);
+    }
 
     // Update paddles for current screen
-    if (
-      this.state.screen === "countdown" ||
-      this.state.screen === "playing"
-    ) {
+    if (this.state.screen === "countdown" || this.state.screen === "playing") {
       // Update human paddles based on held keys
       if (this.state.mode === "solo") {
         // Solo: P1 uses both p1 and p2 controls
@@ -184,5 +206,6 @@ export class GameLoop {
     this.stop();
     this.inputManager.destroy();
     this.audioManager.destroy();
+    this.pointerManager.destroy();
   }
 }

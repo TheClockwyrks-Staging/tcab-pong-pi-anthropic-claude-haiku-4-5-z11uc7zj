@@ -3,6 +3,13 @@
 import { createInitialState } from "./game/state";
 import { GameLoop } from "./runtime/game-loop";
 import { DebugSurface } from "./game/instrumentation";
+import type { CaromDebugAPI } from "./game/debug-api";
+
+declare global {
+  interface Window {
+    __carom?: CaromDebugAPI;
+  }
+}
 
 let gameLoop: GameLoop;
 let debugSurface: DebugSurface;
@@ -20,16 +27,15 @@ function initializeGame(): void {
   gameLoop = new GameLoop(state, canvas, debugSurface);
 
   // Install debug surface on window
-  (window as any).__carom = {
-    version: debugSurface["state"] ? 1 : 0,
+  const caromApi: CaromDebugAPI = {
+    version: 1,
     // Clock
     setAutoStep: (enabled: boolean) => {
       gameLoop.setAutoStep(enabled);
       debugSurface.setAutoStep(enabled);
     },
     advance: (seconds: number, frames?: number) => {
-      frames = frames || 1;
-      gameLoop.advanceFrames(frames, seconds);
+      gameLoop.advanceFrames(frames || 1, seconds);
     },
     // World
     clearWorld: () => debugSurface.clearWorld(),
@@ -38,25 +44,40 @@ function initializeGame(): void {
     reset: () => debugSurface.reset(),
     reconcile: () => debugSurface.reconcile(),
     // Screens
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setScreen: (screen: string) => debugSurface.setScreen(screen as any),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setMode: (mode: string) => debugSurface.setMode(mode as any),
     setMenuIndex: (index: number) => debugSurface.setMenuIndex(index),
     setTitleIndex: (index: number) => debugSurface.setTitleIndex(index),
-    setResumeScreen: (screen: string) => debugSurface.setResumeScreen(screen as any),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setResumeScreen: (screen: string) =>
+      debugSurface.setResumeScreen(screen as any),
     // Match state
     setScore: (p1: number, p2: number) => debugSurface.setScore(p1, p2),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setWinner: (side: string | null) => debugSurface.setWinner(side as any),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setReceiver: (side: string) => debugSurface.setReceiver(side as any),
     // Paddles
-    setPaddleCy: (side: string, cy: number) => debugSurface.setPaddleCy(side as any, cy),
-    setPaddleVy: (side: string, vy: number) => debugSurface.setPaddleVy(side as any, vy),
-    setPaddleDriven: (side: string, driven: boolean) => debugSurface.setPaddleDriven(side as any, driven),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setPaddleCy: (side: string, cy: number) =>
+      debugSurface.setPaddleCy(side as any, cy),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setPaddleVy: (side: string, vy: number) =>
+      debugSurface.setPaddleVy(side as any, vy),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setPaddleDriven: (side: string, driven: boolean) =>
+      debugSurface.setPaddleDriven(side as any, driven),
     // Ball
-    setBallPosition: (x: number, y: number) => debugSurface.setBallPosition(x, y),
-    setBallVelocity: (vx: number, vy: number) => debugSurface.setBallVelocity(vx, vy),
+    setBallPosition: (x: number, y: number) =>
+      debugSurface.setBallPosition(x, y),
+    setBallVelocity: (vx: number, vy: number) =>
+      debugSurface.setBallVelocity(vx, vy),
     setBallSpin: (spin: number) => debugSurface.setBallSpin(spin),
     setBallHeld: (held: boolean) => debugSurface.setBallHeld(held),
-    setBallHoldTimer: (seconds: number) => debugSurface.setBallHoldTimer(seconds),
+    setBallHoldTimer: (seconds: number) =>
+      debugSurface.setBallHoldTimer(seconds),
     setBallServeSign: (sign: 1 | -1) => debugSurface.setBallServeSign(sign),
     drawBallServeSign: () => debugSurface.drawBallServeSign(),
     // AI
@@ -68,6 +89,8 @@ function initializeGame(): void {
     snapshot: () => debugSurface.snapshot(),
     menuItemRect: (index: number) => debugSurface.menuItemRect(index),
   };
+
+  window.__carom = caromApi;
 
   gameLoop.start();
 }

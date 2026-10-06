@@ -2,6 +2,7 @@
 
 import { Input } from "../types";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface InputEdges extends Input {}
 
 const KEY_BINDINGS: Record<string, keyof Input> = {

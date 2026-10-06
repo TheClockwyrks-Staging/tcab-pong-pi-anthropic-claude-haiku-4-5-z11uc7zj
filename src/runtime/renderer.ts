@@ -193,7 +193,11 @@ export class Renderer {
     }
   }
 
-  renderMenu(menuItems: string[], title: string, highlightedIndex: number): void {
+  renderMenu(
+    menuItems: string[],
+    title: string,
+    highlightedIndex: number,
+  ): void {
     // Draw semi-transparent overlay
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     this.ctx.fillRect(0, 0, FIELD_W, FIELD_H);

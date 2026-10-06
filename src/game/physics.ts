@@ -238,7 +238,10 @@ function handlePaddleHit(
   ball.vy = newSpeed * Math.sin(theta);
 
   // Spin from paddle motion
-  ball.spin = Math.max(-SPIN_CLAMP, Math.min(SPIN_CLAMP, ball.spin + paddle.vy * SPIN_FROM_PADDLE));
+  ball.spin = Math.max(
+    -SPIN_CLAMP,
+    Math.min(SPIN_CLAMP, ball.spin + paddle.vy * SPIN_FROM_PADDLE),
+  );
 
   // Placement
   if (side === "left") {

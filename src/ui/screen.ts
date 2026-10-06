@@ -98,7 +98,10 @@ export class ScreenRenderer {
     this.drawMenu(state, ctx, ["BACK"], 600, 60);
   }
 
-  private renderCountdown(state: GameState, ctx: CanvasRenderingContext2D): void {
+  private renderCountdown(
+    state: GameState,
+    ctx: CanvasRenderingContext2D,
+  ): void {
     if (!state.ball) return;
 
     const seconds = Math.ceil(state.ball.holdTimer);
@@ -126,7 +129,10 @@ export class ScreenRenderer {
     this.drawMenu(state, ctx, PAUSE_ITEMS, 250, 100);
   }
 
-  private renderMatchover(state: GameState, ctx: CanvasRenderingContext2D): void {
+  private renderMatchover(
+    state: GameState,
+    ctx: CanvasRenderingContext2D,
+  ): void {
     // Draw semi-transparent overlay
     ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
     ctx.fillRect(0, 0, FIELD_W, FIELD_H);
@@ -135,17 +141,14 @@ export class ScreenRenderer {
     ctx.fillStyle = "#ffd700";
     ctx.font = "bold 64px Arial";
     ctx.textAlign = "center";
-    const winnerText = state.winner === "left" ? "PLAYER 1 WINS" : "PLAYER 2 WINS";
+    const winnerText =
+      state.winner === "left" ? "PLAYER 1 WINS" : "PLAYER 2 WINS";
     ctx.fillText(winnerText, FIELD_W / 2, 120);
 
     // Draw final score
     ctx.fillStyle = "#ffffff";
     ctx.font = "48px Arial";
-    ctx.fillText(
-      `${state.score.p1} - ${state.score.p2}`,
-      FIELD_W / 2,
-      200,
-    );
+    ctx.fillText(`${state.score.p1} - ${state.score.p2}`, FIELD_W / 2, 200);
 
     // Draw menu items
     this.drawMenu(state, ctx, MATCHOVER_ITEMS, 280, 100);

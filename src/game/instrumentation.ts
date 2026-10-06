@@ -94,11 +94,12 @@ export class DebugSurface {
   reset(): void {
     const currentMuted = this.state.muted;
     const currentSimTime = this.state.simTime;
+    const currentTitleIndex = this.state.titleIndex;
 
     this.state.screen = "title";
     this.state.mode = "solo";
     this.state.menuIndex = 0;
-    this.state.titleIndex = this.state.titleIndex;
+    this.state.titleIndex = currentTitleIndex;
     this.state.resumeScreen = "playing";
 
     this.state.score = { p1: 0, p2: 0 };
@@ -168,17 +169,20 @@ export class DebugSurface {
 
   // Paddles
   setPaddleCy(side: Side, cy: number): void {
-    const paddle = side === "left" ? this.state.paddles.left : this.state.paddles.right;
+    const paddle =
+      side === "left" ? this.state.paddles.left : this.state.paddles.right;
     paddle.cy = Math.max(PADDLE_MIN_CY, Math.min(PADDLE_MAX_CY, cy));
   }
 
   setPaddleVy(side: Side, vy: number): void {
-    const paddle = side === "left" ? this.state.paddles.left : this.state.paddles.right;
+    const paddle =
+      side === "left" ? this.state.paddles.left : this.state.paddles.right;
     paddle.drivenVy = vy;
   }
 
   setPaddleDriven(side: Side, driven: boolean): void {
-    const paddle = side === "left" ? this.state.paddles.left : this.state.paddles.right;
+    const paddle =
+      side === "left" ? this.state.paddles.left : this.state.paddles.right;
     paddle.driven = driven;
   }
 

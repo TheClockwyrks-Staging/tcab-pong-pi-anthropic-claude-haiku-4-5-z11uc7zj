@@ -1,7 +1,13 @@
 // AI opponent logic
 
 import { GameState } from "../types";
-import { AI_SPEED, AI_REACT, AI_DEADZONE, AI_HOME_Y, AI_HOME_DEADZONE } from "../constants";
+import {
+  AI_SPEED,
+  AI_REACT,
+  AI_DEADZONE,
+  AI_HOME_Y,
+  AI_HOME_DEADZONE,
+} from "../constants";
 
 export function updateAI(state: GameState, dt: number): void {
   if (state.mode !== "solo") return;
